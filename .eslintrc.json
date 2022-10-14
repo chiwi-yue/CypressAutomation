@@ -1,6 +1,7 @@
 {
   "plugins": [
-    "cypress"
+    "cypress",
+    "chai-friendly"
   ],
 
   "rules": {
@@ -9,11 +10,17 @@
     "cypress/assertion-before-screenshot": "warn",
     "cypress/no-force": "warn",
     "cypress/no-async-tests": "error",
-    "cypress/no-pause": "error"
+    "cypress/no-pause": "error",
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2
   },
 
   "env": {
     "cypress/globals": true
-  }
+  },
 
+  "extends": [
+    "plugin:cypress/recommended",
+    "plugin:chai-friendly/recommended"
+  ]
 }
