@@ -5,6 +5,12 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    specPattern: 'cypress/integration/examples/*.js'
+
+    specPattern: 'cypress/integration/**/*.sp.{js,ts}',
+    baseUrl: "http://localhost:3000",
+
   },
+  evn: {
+    apiUrl: "http://localhost:3001",
+  }
 });
