@@ -1,3 +1,4 @@
+
 const leftTopMenu = [
     'About',
     'Store',
@@ -14,6 +15,23 @@ const googleImage = {
     height: '92',
     alt: 'Google',
 }
+
+const centreButtons = [
+    'Google Search',
+    'I\'m Feeling Lucky',
+]
+
+const leftFooterItems = [
+    'Advertising',
+    'Business',
+    'How Search works',
+]
+
+const rightFooterItems = [
+    'Privacy',
+    'Terms',
+    'Settings',
+]
 
 describe('Contents in Google homepage', () => {
     beforeEach(() => {
@@ -83,7 +101,8 @@ describe('Contents in Google homepage', () => {
     const getIframeDocument = ()=> {
         return cy
         .get('iframe')
-        .its('0.contentDocument').should('exist')
+        .its('0.contentDocument')
+        .should('be.exist')
     }
 
     const getIframeBody = () => {
@@ -95,9 +114,50 @@ describe('Contents in Google homepage', () => {
         // chaining more Cypress commands, like ".find(...)"
         .then(cy.wrap)
       }
-    it.only('Should display the Sign in pop-up correctly and dismiss it', () => {
+    it('Should display the Sign in pop-up correctly and dismiss it', () => {
         getIframeBody().find('.yZqNl').should('have.text', 'Sign in')
         getIframeBody().find('.rr4y5c').should('have.text', 'No thanks').click()
     });
 
+    it('Should display centre elements', () => {
+        cy.get('.FPdoLc > center > input')
+        .as('getCentreElements')
+        .should('be.visible')
+        .and('have.length', 2)
+        .each(($el, index) => {
+            const buttonName = $el[0].ariaLabel
+            expect(buttonName).to.have.string(centreButtons[index])
+        })
+    });
+
+    it('Should display centre promotion', () => {
+        cy.get('.szppmdbYutt__middle-slot-promo').as('getCentrePromotion').should('be.visible')
+        cy.get('.szppmdbYutt__middle-slot-promo > img').should('be.visible')
+    });
+
+    it('Should disoplay correct user region', () => {
+        cy.get('.uU7dJb').should('be.visible').and('have.text', 'Australia')
+    });
+
+    it('Should display the left footer content', () => {
+        cy.get('div.KxwPGc.AghGtd')
+        .should('be.be.visible')
+        .children()
+        .should('have.length', 3)
+        .each(($el, i) => {
+            const menuString = $el[0].innerText
+            expect(menuString).to.have.string(leftFooterItems[i])
+        })
+    });
+
+    it.only('Should display the right footer content', () => {
+        cy.get('.KxwPGc.iTjxkf')
+        .should('be.visible')
+        .children()
+        .and('have.length', 3)
+        .each(($el, i) => {
+            const menuString = $el[0].innerText
+            expect(menuString).to.have.string(rightFooterItems[i])
+        })
+    });
 })
