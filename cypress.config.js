@@ -6,11 +6,11 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
 
-    specPattern: 'cypress/integration/**/*.sp.{js,ts}',
-    baseUrl: "http://localhost:3000",
+    specPattern: 'cypress/integration/**/*.cy.{js,ts}',
+    // baseUrl: "http://localhost:3000",
 
   },
   evn: {
-    apiUrl: "http://localhost:3001",
+    // apiUrl: "http://localhost:3001",
   }
 });
