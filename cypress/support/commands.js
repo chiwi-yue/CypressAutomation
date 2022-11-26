@@ -26,12 +26,33 @@
 
 /// <reference types="cypress" />
 
+import 'cypress-iframe';
+
 Cypress.Commands.add("getBySel", (selector) => {
     return cy.get(`[data-test=${selector}]`)
 })
 
+// const attribute = {
+//     innerHTML: 'innerHTML',
+//     ariaLabel: 'ariaLabel',
+// }
+
 Cypress.Commands.add(
-    'login', (username, password, { rememberUser = false } ={} ) => {
+    'verifyItem', (selector, menuArray, length) => {
+        cy.get(selector)
+        .should('be.visible')
+        .children()
+        .and('have.length', length)
+        .each(($el, index) => {
+            const text = $el[0].innerText
+            // const text = $el[0].getAttribute('value')
+            expect(text).to.have.string(menuArray[index])
+        })
+}
+)
+
+Cypress.Commands.add(
+    'login', (username, password, { rememberUser = false } = {} ) => {
         const signinPath = "/signin";
         const log = Cypress.log({
             name: "login",

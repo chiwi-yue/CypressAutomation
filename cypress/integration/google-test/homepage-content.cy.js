@@ -102,7 +102,7 @@ describe('Contents in Google homepage', () => {
         return cy
         .get('iframe')
         .its('0.contentDocument')
-        .should('be.exist')
+        .should('exist')
     }
 
     const getIframeBody = () => {
@@ -114,9 +114,15 @@ describe('Contents in Google homepage', () => {
         // chaining more Cypress commands, like ".find(...)"
         .then(cy.wrap)
       }
-    it('Should display the Sign in pop-up correctly and dismiss it', () => {
+    it('method#1: Should display the Sign in pop-up correctly and dismiss it', () => {
         getIframeBody().find('.yZqNl').should('have.text', 'Sign in')
         getIframeBody().find('.rr4y5c').should('have.text', 'No thanks').click()
+    });
+    
+    it('method#2: iframe plugin', () => {
+        cy.frameLoaded('iframe')
+        cy.iframe('iframe').find('.yZqNl').should('have.text', 'Sign in')
+        cy.iframe('iframe').find('.rr4y5c').should('have.text', 'No thanks').click()
     });
 
     it('Should display centre elements', () => {
@@ -131,8 +137,16 @@ describe('Contents in Google homepage', () => {
     });
 
     it('Should display centre promotion', () => {
-        cy.get('.szppmdbYutt__middle-slot-promo').as('getCentrePromotion').should('be.visible')
-        cy.get('.szppmdbYutt__middle-slot-promo > img').should('be.visible')
+        cy.get('body').then((body) => {
+            if(body.find('.szppmdbYutt__middle-slot-promo').length > 0) {
+                cy.get('.szppmdbYutt__middle-slot-promo').should('be.visible')
+                cy.get('.szppmdbYutt__middle-slot-promo > img').should('be.visible')
+            }
+            else {
+                cy.log('No Promption today')
+            }
+        })
+
     });
 
     it('Should disoplay correct user region', () => {
@@ -140,24 +154,10 @@ describe('Contents in Google homepage', () => {
     });
 
     it('Should display the left footer content', () => {
-        cy.get('div.KxwPGc.AghGtd')
-        .should('be.be.visible')
-        .children()
-        .should('have.length', 3)
-        .each(($el, i) => {
-            const menuString = $el[0].innerText
-            expect(menuString).to.have.string(leftFooterItems[i])
-        })
+        cy.verifyItem('div.KxwPGc.AghGtd', leftFooterItems, 3)
     });
 
-    it.only('Should display the right footer content', () => {
-        cy.get('.KxwPGc.iTjxkf')
-        .should('be.visible')
-        .children()
-        .and('have.length', 3)
-        .each(($el, i) => {
-            const menuString = $el[0].innerText
-            expect(menuString).to.have.string(rightFooterItems[i])
-        })
+    it('Should display the right footer content', () => {
+        cy.verifyItem('.KxwPGc.iTjxkf', rightFooterItems, 3)
     });
 })

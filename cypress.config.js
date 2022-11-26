@@ -12,5 +12,8 @@ module.exports = defineConfig({
   },
   evn: {
     // apiUrl: "http://localhost:3001",
-  }
+  },
+
+  chromeWebSecurity: false
+
 });
