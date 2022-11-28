@@ -9,11 +9,15 @@ module.exports = defineConfig({
     specPattern: 'cypress/integration/**/*.cy.{js,ts}',
     // baseUrl: "http://localhost:3000",
 
+    experimentalSessionAndOrigin: true,
+
   },
   evn: {
     // apiUrl: "http://localhost:3001",
   },
 
-  chromeWebSecurity: false
+  chromeWebSecurity: false,
+
+  
 
 });

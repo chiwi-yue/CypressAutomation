@@ -38,6 +38,15 @@ Cypress.Commands.add("getBySel", (selector) => {
 // }
 
 Cypress.Commands.add(
+    'verifyURL', (selector, expectURL) => {
+        cy.get(selector).click()
+        cy.url().should((url) => {
+            expect((url), 'url is:').to.contain(expectURL)
+        })
+    }
+)
+
+Cypress.Commands.add(
     'verifyItem', (selector, menuArray, length) => {
         cy.get(selector)
         .should('be.visible')
