@@ -32,6 +32,14 @@ Cypress.Commands.add("getBySel", (selector) => {
     return cy.get(`[data-test=${selector}]`)
 })
 
+Cypress.Commands.add('clickSearchBar', () => {
+    return cy.get('.gLFyf').click()
+})
+
+Cypress.Commands.add('getRandomItem', () => {
+    const randomItem = Math.floor(Math.random() * 10) + 1;
+    cy.get(`ul.G43f7e > li:nth-of-type(${randomItem}) div.wM6W7d span`) //ul.G43f7e > li:nth-of-type(3) div.wM6W7d span
+})
 // const attribute = {
 //     innerHTML: 'innerHTML',
 //     ariaLabel: 'ariaLabel',
